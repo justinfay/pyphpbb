@@ -1,0 +1,76 @@
+# A python PHPBB forum scraper
+
+A simple crawler/scraper for scraping user posts from
+(PHPBB)[https://www.phpbb.com/] forums.
+
+## Usage
+
+pyphpbb is intended to be used from the command line, there are few
+options that can be used to configure it.
+
+### Example
+
+```
+pyphpb -t 'http://someforum.com/phpbb/viewtopic.php?t=1' \
+          'http://someforum.com/phpbb/viewtopic.php?t=2' \
+       -r 10 \
+       -o posts.csv \
+       -v
+```
+
+The `-t` or `--threads` argument takes a variable number of thread
+urls. All posts from the given thread will be scraped.
+
+The `-r` or `--ratelimit` optional argument will limit requests
+to any given host by requiring at least a n second break between
+requests.
+
+The `-o` or `--outfile` optional argument is a path to a file
+where the scraped posts will be written in CSV format, defaults
+to STDOUT.
+
+The `-v` or `--verbose` optional argument will print a summary
+to STDOUT of all HTTP requests made by the crawler.
+
+## Installation.
+
+Installation can be performed using python itself.
+
+`python setup.py install`
+
+Alternatively the program can be run by checking out the
+repo and installing the depencies in requirements.txt manually.
+If you are using this method to run the application replace
+occurrence of `pyphpbb` in the examples with `python -m pyphpbb`.
+
+## Requirements
+
+pyphpbb has been developed using Python3.5, it may work with other
+version but has not been tested.
+
+### Python dependencies:
+
+* (requests)[https://pypi.python.org/pypi/requests/]
+* (lxml)[https://pypi.python.org/pypi/lxml/3.7.0]
+* (python-dateutil)[https://pypi.python.org/pypi/python-dateutil/2.6.0]
+
+## Running the test suite
+
+The test suite uses (unittest)[https://docs.python.org/3/library/unittest.html]
+and can be run by the running this command in this repo.
+
+`python -m unittest discover`
+
+## Limitations
+
+Only PHPBB version 2 is supported, furthermore only a small sample
+of versions have been tested.
+
+The scraper is single threaded although the design _should_ be easy
+to convert to support concurrency.
+
+Scraped object and HTTP statistics are kept in memory which could
+be problematic on larger jobs.
+
+There is no concept of retrying a failed HTTP request and redirect
+handling is not implemented.
